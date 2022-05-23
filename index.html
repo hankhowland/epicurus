@@ -1,0 +1,179 @@
+<head>
+    <link rel="stylesheet" href="opening.css">
+    <link rel="stylesheet" href="general.css">
+    <link rel="stylesheet" href="socrates.css">
+</head>
+
+<div class="black-background"></div>
+
+<div id="opening-screen">
+    <div class="bubble" id="narration">The world goes dark, but not silent. Frightening sounds rush past your ears, and you sense you are traveling great distances in very short amounts of time.
+        Slowly, the blackness clears, revealing...    Athens, 300 B.C. -- A place teeming with wisdom and knowledge.</div>
+    <div class="bubble" id="prompt">Would you like to explore the city?</div>
+    <div class="bubble" id="play-button" onClick="play()">Yeah, I'm not scared.</div>
+    <div id="speech" class="bubble"></div>
+    <img class="img" id="athens" src="athens.jpeg" />
+</div>
+
+<div id="socrates" style="width: 70%;">
+    <div style="width: 50%; margin-right: 80px;">
+        <div id="top-prompt" class="bubble" style="margin-bottom: 20px;">
+            When you arrive at Athens, a strange old man confronts you. You recognize him as Epicurus, 
+            the famed greek philosopher.
+        </div>
+        <img width="100%" src="epicurus.jpeg" style="margin-bottom: 20px; border: 2px solid white;"/>
+        <div class="bubble" id="question">
+            Hello, traveler. I have much wisdom to offer you, if you should choose to accept it. Do you find yourself in need of any guidance?
+        </div>
+    </div>
+    <div style="width: 50%; flex: 1">
+        <div style="color: white; margin-bottom: 50px;">Choose how you would like to respond:</div>
+        <div class="bubble option" style="margin-bottom:20px" id="option1" onClick="changeOptions(1)">
+            Yeah, I could definitely use some guidance.
+        </div>
+        <div class="bubble option" style="margin-bottom:20px" id="option2" onClick="gameOver()">
+            Eh, I've kind of got everything figured out. I'm good
+        </div>
+        <div class="bubble option" style="margin-bottom:20px;display:none;" id="option3">
+        </div>
+    </div>
+</div>
+
+<div id="game-over" style="width: 30%">
+    <div class="bubble" id="game-over-message" style="margin-bottom: 20px;">
+        <b>Game Over.</b> You have refused to hear Epicurus' philosophical advice. Play again?
+    </div>
+    <div class="bubble option" onClick="play()">
+        I guess...
+    </div>
+</div>
+
+<script>
+    stage = 0
+
+    play_button = document.getElementById('play-button')
+    opening_screen = document.getElementById('opening-screen')
+    socrates = document.getElementById('socrates')
+    game_over = document.getElementById('game-over')
+    option1 = document.getElementById('option1')
+    option2 = document.getElementById('option2')
+    option3 = document.getElementById('option3')
+    question = document.getElementById('question')
+    top_prompt = document.getElementById('top-prompt');
+    game_over_message = document.getElementById('game-over-message');
+
+    function play() {
+        opening_screen.style.display = 'none';
+        socrates.style.display = 'flex';
+        game_over.style.display = 'none';
+    }
+
+    function gameOver() {
+        top_prompt.innerHTML = "When you arrive at athens, a strange old man confronts you. You recognize him as Epicurus, the famed greek philosopher."
+        question.innerHTML = "Hello, traveler. I have much wisdom to offer you, if you should choose to accept it. Do you find yourself in need of any guidance?"
+        option1.innerHTML = "Yeah, I could definitely use some guidance."
+        option2.innerHTML = "Eh, I've kind of got everything figured out. I'm good"
+        option1.onclick = () => {changeOptions(1)}
+        option2.onclick = () => {gameOver()}
+        socrates.style.display = 'none';
+        game_over.style.display = 'block';
+        option3.style.display = 'none'
+    }
+
+    function changeOptions(n) {
+        if (n == 1) {
+            question.innerHTML = "Ok, let's get straight to the heart of the matter. What are you attempting to accomplish as you go through your day-to-day activities? What would you say is the goal of your life? "
+            option1.innerHTML = "I want to achieve as much as possible before I die, so that I can leave a legacy and be remembered by society."
+            option1.onclick = () => {changeOptions(2)}
+            option2.innerHTML = "I guess I'm more of a pleasure seeker. I followe whatever it is that most attracts me at any given moment, without putting too much thought towards any long term goal. I figure I'm going to die someday, so nothing I do really matters, and I should just try to maximize my pleasurable experiences before my time comes."
+            option2.onclick = () => {changeOptions(2)}
+            option3.style.display = 'block'
+            option3.innerHTML = "I think my overall goal is to be happy, but that is easier said than done. I've tried a lot of different methods, but have never found a technique that works consistently."
+            option3.onclick = () => {changeOptions(3)}
+        } else if (n == 2) {
+            top_prompt.innerHTML = `“Death shouldn't matter because you don't feel anything after you die: Death is nothing to us. For what has been dissolved has no sense-experience, and what has no sense-experience is nothing to us.”`
+            question.innerHTML = "It seems like the eventuality of death has an influence on how you live your life. In my teachings, we believe that death shouldn't factor into the equation at all. The quote above gives some explanation as to why we hold that belief. Does thinking about this a little more change anything for you?"
+            option1.innerHTML = "I do sometimes forget that I won't know or feel anything about anything after death. That is a very scary thought, and is why I feel like I need to maximize my time alive as much as I possibly can."
+            option1.onclick = () => {changeOptions(4)}
+            option2.innerHTML = "I do sometimes forget that I won't know or feel anything about anything after death. In a way, that is a peaceful thought, and does change how I think about living. Maybe it's best to forget about trying to “maximize” anything, and just try to “be happy.” However, it's a little hard to know what “being happy” means or entails sometimes."
+            option2.onclick = () => {changeOptions(3)}
+            option3.innerHTML = "Well, I believe in life after death, so I don't think that quote is correct at all. Death is everything to me, because the decisions I make in life are guided by the idea that they determine the conditions of my afterlife."
+            option3.onclick = () => {
+                game_over_message.innerHTML = "After realizing that you believe strongly in the afterlife, Epicurus has decided that you will never buy into his beliefs about life and death. <b>Game over.</b> Play again?"
+                gameOver();
+            }
+        } else if (n == 3) {
+            top_prompt.innerHTML = `“The purest security is that which comes from a quiet life and withdrawal from the many, although a certain degree of security from other men does come by means of the power to repel [attacks] and by means of prosperity.”`
+            question.innerHTML = "Well then, maybe you would find some help in my teachings. Me and my followers seek to live a life “free from disturbance,” and we have developed what we think are some pretty good guidelines for how to do that. Let me tell you some of those guidelines. Living a simple, practical life is the key. If you don't indulge, or seek out things that you don't actually need, than it is easy to be self-sufficent. Also, you must withdraw from the hustle and bustle of society, like the quote above suggests:"
+            option1.innerHTML = "I want to buy cool things though. There are so many amazing products out there, how could I possibly resist?"
+            option1.onclick = () => {
+                game_over_message.innerHTML = "You have fully bought into consumerism, and Epicurus has decided you are a lost cause. <b>Game over.</b> Play again?"
+                gameOver()
+            }
+            option2.innerHTML = "I don't think you understand how modern society works. I have to engage in society to make money. If I live like a hermit and withdraw from normal life, I won't have any income, and won't be able to live comfortably."
+            option2.onclick = () => {changeOptions(5)}
+            option3.innerHTML = "Yeah, you've convinced me, I'm gonna go live in the mountains."
+            option3.onclick = () => {
+                game_over_message.innerHTML = "Epicurus has convinced you of his ideals, and moved on to his next potential convert. <b>Game over.</b> Play again?"
+                gameOver();
+            }
+        } else if (n == 4) {
+            question.innerHTML = "But once you are dead, you will cease to be aware of whether you maximized your experience or not, so why should you care about that in the first place?"
+            option1.innerHTML = "Okay, but what about right before I die? I don't want to be lying in bed, waiting for death to take me, full of regret! I want to know that I did what I could, while I could."
+            option1.onclick = () => {
+                game_over_message.innerHTML = "You are hyper-focused on your imminent death, and Epicurus has given up attempting to help you find peace. <b>Game Over.</b> Play again?"
+                gameOver()
+            }
+            option2.innerHTML = "Hmmm... I guess you are right, it might be better to live life without a constant awareness of the seconds ticking down until I die. How do you suggest I do that though?"
+            option2.onclick = () => {changeOptions(3)}
+        } else if (n == 5) {
+            option3.style.display = 'none'
+            question.innerHTML = "But you shouldn't need much money at all if you truly live the simple, unvarnished life I speak of. Consider the quote above, and let me know what you think."
+            top_prompt.innerHTML = `“Natural wealth is both limited and easy to acquire. But wealth [as defined by] groundless opinions extends without limit.”`
+            option1.innerHTML = "I don't think that quote applies to the version of society I live in. The average rent in the United States is more than $1500, and on federal minimum wage, working 40 hours a week, you make $1256 a month. Also, working 40 hours a week is actually quite hard, and leaves you with no freedom to pursue what you actually want to pursue in life."
+            option1.onclick = () => {changeOptions(6)}
+            option2.innerHTML = "You are right, if I live humbly enough, I won't need very much money at all."
+            option2.onclick = () => {
+                game_over_message.innerHTML = "Epicurus has convinced you of his ideals, and moved on to his next potential convert. <b>Game over.</b> Play again?"
+                gameOver();
+            }
+        } else if (n == 6) {
+            question.innerHTML = "Well, if you live practically, and work hard early in life to get ahead, you should be able to get a job that pays a lot better than minimum wage, right? Then you could live comfortably, and not have to work so hard after a certain point."
+            option1.innerHTML = "Yes but that requires one to be born into privilege and wealth. In my society you basically have to go to college if you want the guarantee of a well-paying job in adulthood, and college costs significantly more than what most people have laying around. Some people are born into a situation where no matter how hard they work early in life, there just isn't a clear path to earning comfortable wages."
+            option1.onclick = () => {changeOptions(7)}
+            option2.innerHTML = "Yeah, that could work, but it's still not easy. Even once I am making enough to be comfortable, I wouldn't necessarily get to put my feet up and relax. What if I need to put my kids through college, or help them get their feet on the ground once they leave home?"
+            option2.onclick = () => {changeOptions(8)}
+        } else if (n == 7) {
+            question.innerHTML = "Hmmm... Ok. Well maybe you can go live outside of society completely, where there is no rent at all."
+            option1.innerHTML = "Ok, but I think I would get very lonely if I did that. I need some source of community in order to be happy, and I my most reliable sources of community lie within the capitalist system. If I foregoe a traditional life, I will probably ostracize myself from my friends and family."
+            option1.onclick = () => {changeOptions(9)} 
+            option2.innerHTML = "Yeah maybe you're right. I'm going to get back in my time machine so I can get back home and start figuring out how I'm going to survive in the great outdoors, without a CVS on every corner."
+            option2.onclick = () => {
+                game_over_message.innerHTMl = "Epicurus has convinced you to forego the traditional way of life in a capitalist society. Are you better off this way? Only time will tell. <b>Game over.</b> Play again?"
+                gameOver()
+            }
+        } else if (n == 8) {
+            top_prompt.innerHTML = `“Of the things which wisdom provides for the blessedness of one's whole life, by far the greatest is the possession of friendship.”`
+            question.innerHTML = "Why would you want a family? Me and my followers live according to the quote above, and believe that friends are the only companionship you should need."
+            option1.innerHTML = "Well family is one of the main ways people find community where I'm from. If you are not married with kids, many people would probably assume you are lonely. Also, I would hope that the partner I marry and start a family with also provides me with a great deal of friendship, so in that way, I would be ticking both boxes."
+            option1.onclick = () => {changeOptions(9)}
+            option2.innerHTML = "That is a good point. I guess I'm gonna go try to find some other single people who want to live together in a cheap apartment for the rest of their lives. Thank you for the advice!"
+            option2.onclick = () => {
+                game_over_message.innerHTMl = "Epicurus has convinced you to forego the traditional way of life in a capitalist society. Are you better off this way? Only time will tell. <b>Game over.</b> Play again?"
+                gameOver()
+            }
+        } else if (n == 9) {
+            question.innerHTML = "Hmm... well, then, I'm not quite sure what to say. I do agree that friendship is important. It seems like it is hard work just surviving in the economic system you are stuck in. Well at least we can agree that practicality and resisting the temptations of indulgence lead to a better life."
+            option1.innerHTML = "Yes, you are definitely right about that. I will try a bit harder to hold back on the Ben and Jerry's, and then maybe I'll be able to save a little bit more each month."
+            option1.onclick = () => {
+                game_over_message.innerHTML = "You have convinced Epicurus that it is actually quite hard to make enough money to live comfortably in a capitalistic system, and he has reminded you of the importance of moderation. <b>Game over.</b> Play again?"     
+                gameOver() 
+            }
+            option2.innerHTML = "No, I still want buy nice things though. How will people know how well I'm doing if I don't buy the new Tesla model X? And why would I work so hard only for no-one to see the fruits of my labor?"
+            option2.onclick = () => {
+                game_over_message.innerHTML = "You and Epicurus went back and forth for a while, but were never able to find very much common ground. He has moved on to his next potential convert. <b>Game over.</b> Play again?"
+                gameOver()
+            }
+        }
+    }
+</script>

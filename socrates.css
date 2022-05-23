@@ -1,0 +1,20 @@
+#socrates {
+    display:none;
+    position: absolute;
+    padding: 0 100;
+    top: 80px;
+    flex-direction: row;
+}
+
+.option:hover {
+    background-color: #77dfe8;
+    cursor: pointer;
+}
+
+#game-over {
+    display:none;
+    position: absolute;
+    padding: 0 100;
+    top: 80px;
+    flex-direction: row;
+}
